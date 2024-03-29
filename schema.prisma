@@ -13,7 +13,7 @@ model Movies {
   title       String
   description String?   @db.VarChar(255)
   rating      Float?    @db.Float
-  image_file  String?   @db.VarChar(255)
+  image_file  Bytes?
   genre       String?   @db.VarChar(10)
   reviewer    String?   @db.VarChar(32)
   post_date   DateTime? @db.Date

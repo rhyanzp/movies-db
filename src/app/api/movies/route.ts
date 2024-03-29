@@ -23,24 +23,32 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const body = await request.json();
-  console.log(body.action);
+  const formData = await request.formData();
 
-  switch (body.action) {
+  const data: {
+    [key: string]: string | File | number;
+    image_file: File;
+  } = Object.fromEntries(Array.from(formData.entries())) as any;
+  console.log({ data });
+
+  switch (data.action) {
     case "DELETE":
       const delMovie = await prisma.movies.delete({
         where: {
-          id: body.id,
+          id: data.id,
         },
       });
       console.log(`Deleted movie:`, delMovie);
       return Response.json(delMovie);
       break;
     case "CREATE":
-      delete body.action;
-      console.log("Here");
+      delete data.action;
+      data.rating = Number(data.rating);
+      data.post_date = new Date();
+      data.image_file = Buffer.from(await data.image_file.arrayBuffer());
+
       const addMovie = await prisma.movies.create({
-        data: body,
+        data: data,
       });
       console.log(`Created movie:`, addMovie);
       return Response.json(addMovie);

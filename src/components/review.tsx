@@ -16,6 +16,9 @@ import {
 export default function Review(props: any) {
   const { data } = props;
   const date = new Date(data.post_date);
+  const buffer = Buffer.from(data.image_file);
+  const blob = new Blob([buffer], { type: "image/jpeg" });
+  const url = URL.createObjectURL(blob);
 
   function delReview(id: number) {
     console.log("fetching...");
@@ -32,7 +35,7 @@ export default function Review(props: any) {
     <>
       {data.id && (
         <div className="post bg-white rounded-lg overflow-hidden shadow-md">
-          <Image src={""} alt="Post Image" width={500} height={200} />
+          <Image src={url} alt={"Movie Thumbnail"} width={500} height={200} />
           <div className="p-4">
             <div className="flex justify-between items-center mb-2">
               <h1 className="text-indigo-500 text-xl font-bold mb-2 flex items-center">
