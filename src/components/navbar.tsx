@@ -11,7 +11,7 @@ export default function Navbar() {
         <li key={"logo"}>
           <Image src={Logo} width={50} height={50} alt="" />
         </li>
-        <li key={"Home"}>
+        <li key={"Shop"}>
           <Link
             href="/"
             className="text-white hover:text-indigo-300 px-10 py-2 border hover:border-indigo-500 rounded"
